@@ -1,24 +1,29 @@
-name: List Recent Workflow Runs
+name: Fetch Data
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *' # Ejecutar cada hora
+  push:
+    branches:
+      - main
 
 jobs:
-  list-workflow-runs:
+  fetch-data:
     runs-on: ubuntu-latest
-
     steps:
-    - name: List workflow runs
-      id: list-runs
-      uses: actions/github-script@v4
-      with:
-        script: |
-          const runs = await github.actions.listWorkflowRunsForRepo({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            per_page: 10,
-          });
-          return runs.data.workflow_runs.map(run => run.html_url);
-      
-    - name: Output workflow run URLs
-      run: echo "${{ steps.list-runs.outputs.results }}"
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Fetch data from external site
+      run: |
+        curl -o data.html https://www.comprasestatales.gub.uy/consultas/
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add data.html
+        git commit -m 'Update data.html'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
