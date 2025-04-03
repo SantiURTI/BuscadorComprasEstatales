@@ -10,7 +10,7 @@ const fs = require('fs'); // Necesitas importar fs para escribir archivos
     await page.goto('https://www.comprasestatales.gub.uy/consultas/buscar/tipo-pub/VIG/inciso/3/ue/4/tipo-doc/C/tipo-fecha/ROF/rango-fecha/2025-04-01_2025-04-30/filtro-cat/CAT/orden/ORD_ROF/tipo-orden/ASC');
 
     // Scroll hasta el final de la página para cargar todas las compras
-    await autoScroll(page);
+    //await autoScroll(page);
     
     // Obtener el contenido HTML de la página
     const content = await page.content();
