@@ -69,10 +69,11 @@ async function buscarCompras() {
         
         // Obtener el rango de datos
         const range = XLSX.utils.decode_range(ws["!ref"]);
-        
+        console.log("Rango de celdas:", range);
         // Aplicar estilos a los encabezados
         for (let C = range.s.c; C <= range.e.c; C++) { 
-            const cellAddress = XLSX.utils.encode_cell({ r: 0, c: C }); // Celda de encabezado
+            const cellAddress = XLSX.utils.encode_cell({ r: 0, c: C }); 
+            console.log("Aplicando estilo a la celda encabezado:", cellAddress);// Celda de encabezado
             if (ws[cellAddress]) {
                 ws[cellAddress].s = headerStyle;
             }
