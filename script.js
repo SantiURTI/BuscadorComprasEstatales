@@ -99,7 +99,18 @@ async function buscarCompras() {
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Compras");
         
-        XLSX.writeFile(wb, "Compras.xlsx");
+        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+        const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+        const url = URL.createObjectURL(data);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Compras.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        //XLSX.writeFile(wb, "Compras.xlsx");
         console.log("Se han extraído todas las compras.");
         
     } catch (error) {
