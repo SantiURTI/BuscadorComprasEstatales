@@ -1,11 +1,11 @@
 async function buscarCompras() {
     try {
-        const response = await fetch('data.json');
-        const data = await response.json();
+        const response = await fetch('data.html');
+        const htmlText = await response.text();
 
         // Encuentra el div con id 'container'
         const parser = new DOMParser();
-        const doc = parser.parseFromString(data.html, 'text/html');
+        const doc = parser.parseFromString(htmlText, 'text/html');
         const container = doc.getElementById('container');
         if (container) {
             // Busca el primer div con clase 'row item' dentro del container
