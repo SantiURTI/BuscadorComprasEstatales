@@ -50,13 +50,22 @@ async function buscarCompras() {
         console.log('Data extracted:', comprasData);
         
         //Crea excel con los datos, crea un libro nuevo excel (archivo vacio) y agrega la hoja, finalmente descarga el excel
-        const ws = XLSX.utils.aoa_to_sheet([["Título", "Descripción", "Fecha y Hora", "Fecha de Publicación", "Fecha de Última Modificación"], ...comprasData]);
+        const ws = XLSX.utils.aoa_to_sheet([["Título", "Descripción", "Fecha y Hora", "Fecha de Publicación", "Fecha de Modificación"], ...comprasData]);
+        
+        // Autoajustar el ancho de las columnas
+        ws["!cols"] = [
+            { wch: 16 }, // Título
+            { wch: 90 }, // Descripción
+            { wch: 18 }, // Fecha y Hora
+            { wch: 18 }, // Fecha de Publicación
+            { wch: 18 }  // Fecha de Modificación
+        ];
         
         // Estilos
         const headerStyle = { font: { bold: true }, alignment: { horizontal: "center", vertical: "center" } };
         const cellStyle = { alignment: { horizontal: "center", vertical: "center" } };
         const cellBorder = { top: { style: "thin" }, bottom: { style: "thin" }, left: { style: "thin" }, right: { style: "thin" } };
-        const dateFormat = { alignment: { horizontal: "center", vertical: "center" }, z: "yyyy-mm-dd hh:mm" };
+        const dateFormat = { alignment: { horizontal: "center", vertical: "center" }, z: "dd--mm-yyyy hh:mm" };
         
         // Obtener el rango de datos
         const range = XLSX.utils.decode_range(ws["!ref"]);
@@ -68,17 +77,9 @@ async function buscarCompras() {
                 ws[cellAddress].s = headerStyle;
             }
         }
+        /*
+        
 
-        
-        // Autoajustar el ancho de las columnas
-        ws["!cols"] = [
-            { wch: 16 }, // Título
-            { wch: 90 }, // Descripción
-            { wch: 18 }, // Fecha y Hora
-            { wch: 18 }, // Fecha de Publicación
-            { wch: 18 }  // Fecha de Última Modificación
-        ];
-        
         // Aplicar formato a las fechas y bordes
         for (let R = 1; R <= range.e.r; R++) { // Saltamos la fila de encabezado
             for (let C = 0; C <= range.e.c; C++) {
@@ -92,7 +93,7 @@ async function buscarCompras() {
                 }
             }
         }
-
+        */
 
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Compras");
