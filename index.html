@@ -21,15 +21,15 @@
     
     <button onclick="toggleFechas()">Cambiar Formato Fecha</button>
     <script>
-    let dosFechas = false;
-    
-    function toggleFechas() {
-      const fechasDiv = document.getElementById('fechas');
-      fechasDiv.innerHTML = dosFechas 
-        ? '<input type="date" id="fecha1">' 
-        : '<input type="date" id="fecha1"><input type="date" id="fecha2">';
-      dosFechas = !dosFechas;
-    }
+        let dosFechas = false;
+        
+        function toggleFechas() {
+          const fechasDiv = document.getElementById('fechas');
+          fechasDiv.innerHTML = dosFechas 
+            ? '<input type="date" id="fecha1">' 
+            : '<input type="date" id="fecha1"><input type="date" id="fecha2">';
+          dosFechas = !dosFechas;
+        }
     </script>
     
     <button onclick="buscarCompras()">Descargar Excel</button>
