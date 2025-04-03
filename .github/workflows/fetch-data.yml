@@ -25,7 +25,10 @@ jobs:
 
     - name: Install Puppeteer
       run: npm install puppeteer@latest
-
+      
+    - name: Install Express
+      run: npm install express@latest
+      
     - name: Fetch data from external site
       run: |
         echo "Running fetch-data.js"
