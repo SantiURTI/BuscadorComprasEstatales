@@ -8,6 +8,30 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+    <h2>Selecciona la fecha para la consulta:</h2>
+    <label for="fecha">Fecha (YYYY-MM-DD):</label>
+    <input type="date" id="fecha">
+    <button onclick="fetchData()">Consultar</button>
+
+    <script>
+        function fetchData() {
+            const fecha = document.getElementById("fecha").value;
+            if (!fecha) {
+                alert("Por favor, selecciona una fecha.");
+                return;
+            }
+
+            // Enviar la fecha al backend
+            fetch('/scrape', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fecha })
+            })
+            .then(response => response.text())
+            .then(data => alert(data))
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
     <button onclick="buscarCompras()">Buscar Compras</button>
     <div id="result"></div>
 </body>
