@@ -7,7 +7,7 @@ async function buscarCompras() {
         // Encuentra el div con id 'container'
         const doc = new DOMParser().parseFromString(htmlText, 'text/html');
         let comprasData = [];
-        const compras = [...doc.querySelectorAll('.row.item')].filter(item => item.id !== 'ias_noneleft_1743703422331');
+        const compras = [...doc.querySelectorAll('.row.item')].filter(item => !item.id.startsWith('ias_noneleft_'));
         
         console.log(`Found ${compras.length} items`);
         
@@ -21,7 +21,6 @@ async function buscarCompras() {
         compras.forEach(compra => {
             // Busco el titulo de la compra, lo aislo y lo abrevio
             let titulo = compra.querySelector('.col-md-5 h3').innerText;
-            console.log("Se extrago el titulo correctamente");
             titulo = titulo.replace(compra.querySelector('.col-md-5 span').innerText, "");
             titulo = titulo.replace("Licitación Abreviada", "L.A. N°").replace("Compra Directa", "C.D. N°");
             
