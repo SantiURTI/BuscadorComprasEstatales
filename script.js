@@ -36,3 +36,4 @@ async function buscarCompras() {
         console.error('Error fetching the data:', error);
         alert('Error fetching the data.');
     }
+}
