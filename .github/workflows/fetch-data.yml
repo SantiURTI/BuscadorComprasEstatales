@@ -20,6 +20,9 @@ jobs:
       with:
         node-version: '14'
 
+    - name: List files in the working directory
+      run: ls -la
+
     - name: Install Puppeteer
       run: npm install puppeteer
 
