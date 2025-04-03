@@ -31,8 +31,9 @@ async function buscarCompras() {
             // Busco la fecha de publicacion y de modificacion, si es que se modifico
             let fechaPublicacion = "No disponible";
             let fechaUltimaModificacion = "Sin Modificaciones";
-            const textMutedElements = compra.querySelectorAll('.v-middle > span.text-muted');
-            console.log("Texto detectado TextMuted:", textMutedElements[0].innerText);
+            const textMutedElements = compra.querySelectorAll('.v-middle .text-muted');
+            console.log("Texto detectado TextMuted:");
+            console.log(textMutedElements[0].innerText);
             
             if (textMutedElements.length > 0) {
                 const matchPublicado = textMutedElements[0].innerText.match(/Publicado: (.*)/);
