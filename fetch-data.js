@@ -1,34 +1,34 @@
 const puppeteer = require('puppeteer');
-const fs = require('fs'); // Necesitas importar fs para escribir archivos
+const express = require('express');
+const fs = require('fs');
 
-(async () => {
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
+const app = express();
+app.use(express.json());
 
+app.post('/fetch-data', async (req, res) => {
+    const { fecha1, fecha2 } = req.body;
+
+    if (!fecha1 || !fecha2) {
+        return res.status(400).json({ error: "Se requieren ambas fechas" });
+    }
+
+    const url = `https://www.comprasestatales.gub.uy/consultas/buscar/tipo-pub/VIG/inciso/3/ue/4/tipo-doc/C/tipo-fecha/ROF/rango-fecha/${fecha1}_${fecha2}/filtro-cat/CAT/orden/ORD_ROF/tipo-orden/ASC`;
+
+    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
-    await page.goto(
-        'https://www.comprasestatales.gub.uy/consultas/buscar/tipo-pub/VIG/inciso/3/ue/4/tipo-doc/C/tipo-fecha/ROF/rango-fecha/2025-04-01_2025-04-30/filtro-cat/CAT/orden/ORD_ROF/tipo-orden/ASC',
-        { waitUntil: 'networkidle2' } // Espera hasta que la red esté inactiva
-    );
+    
+    await page.goto(url, { waitUntil: 'networkidle2' });
 
-    // Esperar a que aparezcan las compras en la página
     await page.waitForSelector('.row.item', { timeout: 10000 });
-
-    // Scroll hasta el final de la página para cargar todas las compras
     await autoScroll(page);
-
-    // Esperar un poco más para asegurarnos de que todo cargó
     await new Promise(resolve => setTimeout(resolve, 3000));
-    
-    // Obtener el contenido HTML de la página
+
     const content = await page.content();
-    
-    // Guardar el contenido HTML en un archivo
     fs.writeFileSync('data.html', content);
 
     await browser.close();
-})();
+    res.json({ mensaje: "Datos extraídos correctamente", url });
+});
 
 async function autoScroll(page) {
     await page.evaluate(async () => {
