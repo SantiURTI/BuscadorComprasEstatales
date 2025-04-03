@@ -30,9 +30,24 @@
             : '<input type="date" id="fecha1"><input type="date" id="fecha2">';
           dosFechas = !dosFechas;
         }
+
+        function enviarFechas() {
+            const fecha1 = document.getElementById('fecha1').value;
+            const fecha2 = dosFechas ? document.getElementById('fecha2').value : null;
+        
+            fetch('/fetch-data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fecha1, fecha2 })
+            })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(error => console.error("Error:", error));
+            buscarCompras();
+        }
     </script>
     
-    <button onclick="buscarCompras()">Descargar Excel</button>
+    <button onclick="enviarFechas">Descargar Excel</button>
     <div id="result"></div>
 </body>
 </html>
