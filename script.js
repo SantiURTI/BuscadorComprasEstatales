@@ -34,7 +34,7 @@ async function buscarCompras() {
             const textMutedElements = compra.querySelectorAll('.v-middle .text-muted');
             
             if (textMutedElements.length > 0) {
-                console.log('TextMuted es mayor a 0'):
+                console.log('TextMuted es mayor a 0');
                 const matchPublicado = textMutedElements[0].innerText.match(/Publicado: (.*)/);
                 fechaPublicacion = matchPublicado ? matchPublicado[1] : "No disponible";
                 const matchModificado = textMutedElements[0].innerText.match(/Última Modificación: (.*)/);
