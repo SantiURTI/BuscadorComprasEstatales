@@ -32,16 +32,18 @@ async function buscarCompras() {
             let fechaPublicacion = "No disponible";
             let fechaUltimaModificacion = "Sin Modificaciones";
             const textMutedElements = compra.querySelectorAll('.v-middle .text-muted');
-            console.log("Texto detectado TextMuted:");
-            console.log(textMutedElements[0].innerText);
             
             if (textMutedElements.length > 0) {
-                const matchPublicado = textMutedElements[0].innerText.match(/Publicado: (.*)/);
-                fechaPublicacion = matchPublicado ? matchPublicado[1] : "No disponible";
-                const matchModificado = textMutedElements[0].innerText.match(/Última Modificación: (.*)/);
-                fechaUltimaModificacion = matchModificado ? matchModificado[1] : "Sin Modificaciones";
+                const text = textMutedElements[0].innerText.trim(); // Limpia espacios innecesarios
+                
+                // Expresión regular para capturar ambas fechas, donde la fecha de última modificación es opcional
+                const match = text.match(/Publicado:\s*([\d\/]+ \d{2}:\d{2}hs)\s*(?:\|\s*Última Modificación:\s*([\d\/]+ \d{2}:\d{2}hs))?/);
+            
+                if (match) {
+                    fechaPublicacion = match[1]; // Extrae la fecha de publicación 
+                    fechaUltimaModificacion = match[2] || "Sin Modificaciones"; // Si existe la asigna, si no, por defecto
+                }
             }
-
             comprasData.push([titulo, descripcion, fechaHora, fechaPublicacion, fechaUltimaModificacion]);
         });
         
