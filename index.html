@@ -8,31 +8,25 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h2>Selecciona la fecha para la consulta:</h2>
-    <label for="fecha">Fecha (YYYY-MM-DD):</label>
-    <input type="date" id="fecha">
-    <button onclick="fetchData()">Consultar</button>
-
+    <h2>Selecciona Fechas o Día para la Busqueda:</h2>
+    <div id="fechas">
+    <input type="date" id="fecha1">
+    </div>
+    
+    <button onclick="toggleFechas()">Cambiar Formato Fecha</button>
     <script>
-        function fetchData() {
-            const fecha = document.getElementById("fecha").value;
-            if (!fecha) {
-                alert("Por favor, selecciona una fecha.");
-                return;
-            }
-
-            // Enviar la fecha al backend
-            fetch('/scrape', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fecha })
-            })
-            .then(response => response.text())
-            .then(data => alert(data))
-            .catch(error => console.error("Error:", error));
-        }
+    let dosFechas = false;
+    
+    function toggleFechas() {
+      const fechasDiv = document.getElementById('fechas');
+      fechasDiv.innerHTML = dosFechas 
+        ? '<input type="date" id="fecha1">' 
+        : '<input type="date" id="fecha1"><input type="date" id="fecha2">';
+      dosFechas = !dosFechas;
+    }
     </script>
-    <button onclick="buscarCompras()">Buscar Compras</button>
+    
+    <button onclick="buscarCompras()">Descargar Excel</button>
     <div id="result"></div>
 </body>
 </html>
