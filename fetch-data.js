@@ -19,7 +19,7 @@ const fs = require('fs'); // Necesitas importar fs para escribir archivos
     await autoScroll(page);
 
     // Esperar un poco más para asegurarnos de que todo cargó
-    await page.waitForTimeout(3000);
+    await new Promise(resolve => setTimeout(resolve, 3000));
     
     // Obtener el contenido HTML de la página
     const content = await page.content();
