@@ -96,21 +96,25 @@ async function buscarCompras() {
         }
         */
 
+        
+
+        
+        
+         ws["A1"].s = {
+            font: { bold: true, color: { rgb: "FF0000" }, sz: 14 }, // Texto rojo, negrita, tamaño 14
+            fill: { fgColor: { rgb: "FFFF00" } }, // Fondo amarillo
+            alignment: { horizontal: "center", vertical: "center" }, // Alineado al centro
+            border: { // Bordes finos alrededor de la celda
+                top: { style: "thin", color: { rgb: "000000" } },
+                bottom: { style: "thin", color: { rgb: "000000" } },
+                left: { style: "thin", color: { rgb: "000000" } },
+                right: { style: "thin", color: { rgb: "000000" } },
+            },
+        };
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Compras");
         
-        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-        const data = new Blob([excelBuffer], { type: "application/octet-stream" });
-        const url = URL.createObjectURL(data);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "Compras.xlsx";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        //XLSX.writeFile(wb, "Compras.xlsx");
+        XLSX.writeFile(wb, "Compras.xlsx");
         console.log("Se han extraído todas las compras.");
         
     } catch (error) {
