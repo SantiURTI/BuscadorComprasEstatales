@@ -60,7 +60,7 @@ async function buscarCompras() {
             { wch: 18 }, // Fecha de Publicación
             { wch: 18 }  // Fecha de Modificación
         ];
-        
+        /*
         // Estilos
         const headerStyle = { font: { bold: true }, alignment: { horizontal: "center", vertical: "center" } };
         const cellStyle = { alignment: { horizontal: "center", vertical: "center" } };
@@ -78,7 +78,7 @@ async function buscarCompras() {
                 ws[cellAddress].s = headerStyle;
             }
         }
-        /*
+        
         
 
         // Aplicar formato a las fechas y bordes
@@ -98,22 +98,8 @@ async function buscarCompras() {
 
         
 
-        
-        
-         ws["A1"].s = {
-            font: { bold: true, color: { rgb: "FF0000" }, sz: 14 }, // Texto rojo, negrita, tamaño 14
-            fill: { fgColor: { rgb: "FFFF00" } }, // Fondo amarillo
-            alignment: { horizontal: "center", vertical: "center" }, // Alineado al centro
-            border: { // Bordes finos alrededor de la celda
-                top: { style: "thin", color: { rgb: "000000" } },
-                bottom: { style: "thin", color: { rgb: "000000" } },
-                left: { style: "thin", color: { rgb: "000000" } },
-                right: { style: "thin", color: { rgb: "000000" } },
-            },
-        };
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Compras");
-        
         XLSX.writeFile(wb, "Compras.xlsx");
         console.log("Se han extraído todas las compras.");
         
